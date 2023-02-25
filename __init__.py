@@ -22,7 +22,7 @@ if __name__ == "__main__":
         meta(http_equiv="X-UA-Compatible", content="IE=edge")
         meta(name="viewport", content="width=device-width, initial-scale=1")
         title("DiffVoice Online Supplement")
-        link(href="/statics/bootstrap-5.2.2-dist/css/bootstrap.min.css", rel="stylesheet")
+        link(href="/diffvoice-web/statics/bootstrap-5.2.2-dist/css/bootstrap.min.css", rel="stylesheet")
 
     with doc:
         # Title and Metadata:
@@ -89,8 +89,8 @@ if __name__ == "__main__":
                 section_guidedtts2_compare()
         
     with doc.footer:
-        script(src="/statics/jquery/jquery-1.12.4.min.js")
-        script(src="/statics/bootstrap-5.2.2-dist/bootstrap.min.js")
+        script(src="/diffvoice-web/statics/jquery/jquery-1.12.4.min.js")
+        script(src="/diffvoice-web/statics/bootstrap-5.2.2-dist/bootstrap.min.js")
 
     # Script for allowing only one audio to play at the same time:
     doc.children.append(script(raw("""
