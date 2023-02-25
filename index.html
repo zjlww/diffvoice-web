@@ -1,0 +1,2449 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>DiffVoice Online Supplement</title>
+    <link href="/statics/bootstrap-5.2.2-dist/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="border border-2 bg-light p-5 rounded mt-3 border-dark">
+          <h2 style="text-align: center">DiffVoice: Text-to-Speech with Latent Diffusion<br>
+            <small>Online Supplement</small>
+          </h2><br>
+          <div class="row">
+            <div class="col-md-4" style="text-align: center;">
+              <strong style="text-align:center">Zhijun Liu</strong><br>
+              <a href="mailto:zhijunliu@sjtu.edu.cn">zhijunliu@sjtu.edu.cn</a>
+            </div>
+            <div class="col-md-4" style="text-align: center;">
+              <strong style="text-align:center">Yiwei Guo</strong><br>
+              <a href="mailto:cantabile_kwok@sjtu.edu.cn">cantabile_kwok@sjtu.edu.cn</a>
+            </div>
+            <div class="col-md-4" style="text-align: center;">
+              <strong style="text-align:center">Kai Yu</strong><br>
+              <a href="mailto:kai.yu@sjtu.edu.cn">kai.yu@sjtu.edu.cn</a>
+            </div>
+          </div>
+        </div>
+        <div class="border border-2 bg-light p-5 rounded mt-3 border-danger">
+          <p class="lead">This page contains &gt; 100 MiB audio files. So it might take minutes for the audio files to load, depending on your network condition.If you are having problems with the audios playing, you can download all audio files on this page by downlading this 
+            <a href="https://github.com/zjlww/zjlww.github.io">github repository</a>. <br><br>Some of the page's functionality requires javascript. Try to open with a different up-to-date browser. This page is maintained by Zhijun Liu.
+          </p>
+        </div>
+        <div class="border border-2 bg-light p-5 rounded mt-3 border-dark">
+          <h3>Abstract</h3>
+          <p class="lead">
+        In this work, we present DiffVoice, a novel text to speech model based on latent diffusion. We propose to first encode speech signals into a phoneme rate latent representation with a variational autoencoder enhanced by adversarial training, and then jointly model the duration and the latent representation with a diffusion model. Subjective evaluations demonstrate that our method beats the best publicly available systems in naturalness. By adopting recent generative inverse problem solving algorithms for diffusion models, DiffVoice achieves the state of the art performance in text based speech editing, and zero shot adaptation.
+        <br><br>The following are 6 different renditions of the abstract by a DiffVoice model. Note that this model does not have any speaker input.It samples <b>DIFF</b>erent <b>VOICE</b>s from the latent space.</p>
+          <div class="d-flex flex-row mb-3 flex-wrap justify-content-around">
+            <div class="p-2">
+              <audio controls="" preload="none" style="width: 300px">
+                <source src="/diffvoice-web/samples/abstract/f_0.wav" type="audio/wav">
+              </audio>
+            </div>
+            <div class="p-2">
+              <audio controls="" preload="none" style="width: 300px">
+                <source src="/diffvoice-web/samples/abstract/f_1.wav" type="audio/wav">
+              </audio>
+            </div>
+            <div class="p-2">
+              <audio controls="" preload="none" style="width: 300px">
+                <source src="/diffvoice-web/samples/abstract/f_2.wav" type="audio/wav">
+              </audio>
+            </div>
+            <div class="p-2">
+              <audio controls="" preload="none" style="width: 300px">
+                <source src="/diffvoice-web/samples/abstract/m_0.wav" type="audio/wav">
+              </audio>
+            </div>
+            <div class="p-2">
+              <audio controls="" preload="none" style="width: 300px">
+                <source src="/diffvoice-web/samples/abstract/m_1.wav" type="audio/wav">
+              </audio>
+            </div>
+            <div class="p-2">
+              <audio controls="" preload="none" style="width: 300px">
+                <source src="/diffvoice-web/samples/abstract/m_2.wav" type="audio/wav">
+              </audio>
+            </div>
+          </div>
+        </div>
+        <div class="border border-2 bg-light p-5 rounded mt-3 border-dark">
+          <h3>Results for Seen Speakers in LibriTTS</h3>
+          <p class="lead">20 random speakers seen during training from the train-clean-100 split of LibriTTS.</p>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">26</th>
+                  <th scope="col">40</th>
+                  <th scope="col">226</th>
+                  <th scope="col">887</th>
+                  <th scope="col">1069</th>
+                  <th scope="col">1624</th>
+                  <th scope="col">1737</th>
+                  <th scope="col">2136</th>
+                  <th scope="col">2817</th>
+                  <th scope="col">3240</th>
+                  <th scope="col">3699</th>
+                  <th scope="col">4088</th>
+                  <th scope="col">5750</th>
+                  <th scope="col">7302</th>
+                  <th scope="col">7511</th>
+                  <th scope="col">7794</th>
+                  <th scope="col">7800</th>
+                  <th scope="col">7859</th>
+                  <th scope="col">8324</th>
+                  <th scope="col">8580</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row" style="position: sticky; left: 0; z-index:10; opacity: 1.0; background-color: white;">Ground Truth</th>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/gt/26.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/gt/40.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/gt/226.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/gt/887.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/gt/1069.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/gt/1624.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/gt/1737.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/gt/2136.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/gt/2817.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/gt/3240.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/gt/3699.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/gt/4088.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/gt/5750.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/gt/7302.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/gt/7511.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/gt/7794.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/gt/7800.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/gt/7859.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/gt/8324.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/gt/8580.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" style="position: sticky; left: 0; z-index:10; opacity: 1.0; background-color: white;">DiffVoice</th>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/diffvoice-web/26.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/diffvoice-web/40.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/diffvoice-web/226.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/diffvoice-web/887.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/diffvoice-web/1069.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/diffvoice-web/1624.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/diffvoice-web/1737.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/diffvoice-web/2136.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/diffvoice-web/2817.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/diffvoice-web/3240.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/diffvoice-web/3699.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/diffvoice-web/4088.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/diffvoice-web/5750.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/diffvoice-web/7302.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/diffvoice-web/7511.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/diffvoice-web/7794.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/diffvoice-web/7800.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/diffvoice-web/7859.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/diffvoice-web/8324.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/diffvoice-web/8580.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" style="position: sticky; left: 0; z-index:10; opacity: 1.0; background-color: white;">HiFi-GAN</th>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/hifigan/26.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/hifigan/40.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/hifigan/226.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/hifigan/887.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/hifigan/1069.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/hifigan/1624.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/hifigan/1737.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/hifigan/2136.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/hifigan/2817.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/hifigan/3240.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/hifigan/3699.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/hifigan/4088.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/hifigan/5750.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/hifigan/7302.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/hifigan/7511.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/hifigan/7794.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/hifigan/7800.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/hifigan/7859.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/hifigan/8324.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/hifigan/8580.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" style="position: sticky; left: 0; z-index:10; opacity: 1.0; background-color: white;">Autoencoder</th>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/ae/26.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/ae/40.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/ae/226.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/ae/887.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/ae/1069.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/ae/1624.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/ae/1737.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/ae/2136.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/ae/2817.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/ae/3240.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/ae/3699.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/ae/4088.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/ae/5750.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/ae/7302.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/ae/7511.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/ae/7794.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/ae/7800.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/ae/7859.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/ae/8324.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/ae/8580.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" style="position: sticky; left: 0; z-index:10; opacity: 1.0; background-color: white;">VITS</th>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/vits/26.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/vits/40.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/vits/226.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/vits/887.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/vits/1069.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/vits/1624.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/vits/1737.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/vits/2136.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/vits/2817.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/vits/3240.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/vits/3699.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/vits/4088.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/vits/5750.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/vits/7302.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/vits/7511.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/vits/7794.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/vits/7800.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/vits/7859.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/vits/8324.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/vits/8580.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" style="position: sticky; left: 0; z-index:10; opacity: 1.0; background-color: white;">FastSpeech 2</th>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/fs2/26.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/fs2/40.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/fs2/226.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/fs2/887.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/fs2/1069.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/fs2/1624.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/fs2/1737.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/fs2/2136.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/fs2/2817.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/fs2/3240.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/fs2/3699.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/fs2/4088.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/fs2/5750.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/fs2/7302.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/fs2/7511.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/fs2/7794.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/fs2/7800.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/fs2/7859.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/fs2/8324.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/libritts/fs2/8580.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="border border-2 bg-light p-5 rounded mt-3 border-dark">
+          <h3>Zeroshot Synthesis on LibriTTS test-clean</h3>
+          <p class="lead">All speakers are unseen from the test-clean split of LibriTTS.</p>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">121</th>
+                  <th scope="col">237</th>
+                  <th scope="col">260</th>
+                  <th scope="col">908</th>
+                  <th scope="col">1089</th>
+                  <th scope="col">1188</th>
+                  <th scope="col">1284</th>
+                  <th scope="col">1580</th>
+                  <th scope="col">1995</th>
+                  <th scope="col">2300</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row" style="position: sticky; left: 0; z-index:10; opacity: 1.0; background-color: white;">Reference</th>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ref/121_121726_000004_000003.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ref/237_126133_000004_000000.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ref/260_123286_000032_000002.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ref/908_31957_000025_000001.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ref/1089_134686_000008_000000.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ref/1188_133604_000006_000000.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ref/1284_1180_000005_000001.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ref/1580_141083_000001_000002.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ref/1995_1826_000018_000004.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ref/2300_131720_000012_000002.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" style="position: sticky; left: 0; z-index:10; opacity: 1.0; background-color: white;">Ground Truth</th>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/gt/121_121726_000005_000001.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/gt/237_126133_000002_000003.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/gt/260_123286_000024_000000.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/gt/908_31957_000017_000002.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/gt/1089_134686_000034_000003.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/gt/1188_133604_000011_000003.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/gt/1284_1180_000024_000001.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/gt/1580_141083_000009_000004.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/gt/1995_1826_000016_000012.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/gt/2300_131720_000021_000001.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" style="position: sticky; left: 0; z-index:10; opacity: 1.0; background-color: white;">DiffVoice (Prompt)</th>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_prompt/121_121726_000005_000001.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_prompt/237_126133_000002_000003.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_prompt/260_123286_000024_000000.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_prompt/908_31957_000017_000002.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_prompt/1089_134686_000034_000003.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_prompt/1188_133604_000011_000003.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_prompt/1284_1180_000024_000001.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_prompt/1580_141083_000009_000004.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_prompt/1995_1826_000016_000012.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_prompt/2300_131720_000021_000001.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" style="position: sticky; left: 0; z-index:10; opacity: 1.0; background-color: white;">HiFi-GAN</th>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/hifi_gan/121_121726_000005_000001.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/hifi_gan/237_126133_000002_000003.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/hifi_gan/260_123286_000024_000000.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/hifi_gan/908_31957_000017_000002.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/hifi_gan/1089_134686_000034_000003.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/hifi_gan/1188_133604_000011_000003.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/hifi_gan/1284_1180_000024_000001.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/hifi_gan/1580_141083_000009_000004.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/hifi_gan/1995_1826_000016_000012.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/hifi_gan/2300_131720_000021_000001.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" style="position: sticky; left: 0; z-index:10; opacity: 1.0; background-color: white;">Autoencoder</th>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ae/121_121726_000005_000001.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ae/237_126133_000002_000003.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ae/260_123286_000024_000000.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ae/908_31957_000017_000002.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ae/1089_134686_000034_000003.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ae/1188_133604_000011_000003.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ae/1284_1180_000024_000001.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ae/1580_141083_000009_000004.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ae/1995_1826_000016_000012.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ae/2300_131720_000021_000001.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" style="position: sticky; left: 0; z-index:10; opacity: 1.0; background-color: white;">DiffVoice (Encoder)</th>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_encoder/121_121726_000005_000001.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_encoder/237_126133_000002_000003.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_encoder/260_123286_000024_000000.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_encoder/908_31957_000017_000002.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_encoder/1089_134686_000034_000003.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_encoder/1188_133604_000011_000003.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_encoder/1284_1180_000024_000001.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_encoder/1580_141083_000009_000004.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_encoder/1995_1826_000016_000012.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_encoder/2300_131720_000021_000001.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" style="position: sticky; left: 0; z-index:10; opacity: 1.0; background-color: white;">Meta-StyleSpeech</th>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/metastylespeech/121_121726_000005_000001.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/metastylespeech/237_126133_000002_000003.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/metastylespeech/260_123286_000024_000000.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/metastylespeech/908_31957_000017_000002.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/metastylespeech/1089_134686_000034_000003.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/metastylespeech/1188_133604_000011_000003.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/metastylespeech/1284_1180_000024_000001.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/metastylespeech/1580_141083_000009_000004.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/metastylespeech/1995_1826_000016_000012.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/metastylespeech/2300_131720_000021_000001.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" style="position: sticky; left: 0; z-index:10; opacity: 1.0; background-color: white;">VITS (Xvec)</th>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/vits/121_121726_000005_000001.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/vits/237_126133_000002_000003.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/vits/260_123286_000024_000000.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/vits/908_31957_000017_000002.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/vits/1089_134686_000034_000003.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/vits/1188_133604_000011_000003.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/vits/1284_1180_000024_000001.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/vits/1580_141083_000009_000004.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/vits/1995_1826_000016_000012.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/vits/2300_131720_000021_000001.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" style="position: sticky; left: 0; z-index:10; opacity: 1.0; background-color: white;">YourTTS</th>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/yourtts/121_121726_000005_000001.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/yourtts/237_126133_000002_000003.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/yourtts/260_123286_000024_000000.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/yourtts/908_31957_000017_000002.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/yourtts/1089_134686_000034_000003.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/yourtts/1188_133604_000011_000003.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/yourtts/1284_1180_000024_000001.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/yourtts/1580_141083_000009_000004.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/yourtts/1995_1826_000016_000012.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/yourtts/2300_131720_000021_000001.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" style="position: sticky; left: 0; z-index:10; opacity: 1.0; background-color: white;">FastSp.2 (Xvec)</th>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/fs2/121_121726_000005_000001.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/fs2/237_126133_000002_000003.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/fs2/260_123286_000024_000000.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/fs2/908_31957_000017_000002.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/fs2/1089_134686_000034_000003.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/fs2/1188_133604_000011_000003.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/fs2/1284_1180_000024_000001.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/fs2/1580_141083_000009_000004.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/fs2/1995_1826_000016_000012.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/fs2/2300_131720_000021_000001.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="border border-2 bg-light p-5 rounded mt-3 border-dark">
+          <h3>Zeroshot Synthesis on VCTK</h3>
+          <p class="lead">All speakers are unseen from VCTK</p>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">225</th>
+                  <th scope="col">234</th>
+                  <th scope="col">238</th>
+                  <th scope="col">245</th>
+                  <th scope="col">248</th>
+                  <th scope="col">261</th>
+                  <th scope="col">294</th>
+                  <th scope="col">302</th>
+                  <th scope="col">326</th>
+                  <th scope="col">335</th>
+                  <th scope="col">347</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row" style="position: sticky; left: 0; z-index:10; opacity: 1.0; background-color: white;">Reference</th>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ref/p225_005.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ref/p234_005.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ref/p238_005.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ref/p245_005.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ref/p248_005.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ref/p261_005.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ref/p294_005.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ref/p302_005.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ref/p326_005.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ref/p335_005.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ref/p347_005.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" style="position: sticky; left: 0; z-index:10; opacity: 1.0; background-color: white;">Ground Truth</th>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/gt/p225_007.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/gt/p234_069.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/gt/p238_069.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/gt/p245_029.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/gt/p248_033.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/gt/p261_064.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/gt/p294_050.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/gt/p302_052.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/gt/p326_205.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/gt/p335_037.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/gt/p347_058.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" style="position: sticky; left: 0; z-index:10; opacity: 1.0; background-color: white;">DiffVoice (Prompt)</th>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_prompt/p225_007.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_prompt/p234_069.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_prompt/p238_069.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_prompt/p245_029.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_prompt/p248_033.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_prompt/p261_064.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_prompt/p294_050.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_prompt/p302_052.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_prompt/p326_205.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_prompt/p335_037.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_prompt/p347_058.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" style="position: sticky; left: 0; z-index:10; opacity: 1.0; background-color: white;">HiFi-GAN</th>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/hifi_gan/p225_007.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/hifi_gan/p234_069.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/hifi_gan/p238_069.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/hifi_gan/p245_029.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/hifi_gan/p248_033.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/hifi_gan/p261_064.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/hifi_gan/p294_050.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/hifi_gan/p302_052.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/hifi_gan/p326_205.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/hifi_gan/p335_037.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/hifi_gan/p347_058.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" style="position: sticky; left: 0; z-index:10; opacity: 1.0; background-color: white;">Autoencoder</th>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ae/p225_007.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ae/p234_069.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ae/p238_069.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ae/p245_029.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ae/p248_033.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ae/p261_064.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ae/p294_050.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ae/p302_052.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ae/p326_205.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ae/p335_037.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/ae/p347_058.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" style="position: sticky; left: 0; z-index:10; opacity: 1.0; background-color: white;">DiffVoice (Encoder)</th>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_encoder/p225_007.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_encoder/p234_069.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_encoder/p238_069.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_encoder/p245_029.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_encoder/p248_033.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_encoder/p261_064.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_encoder/p294_050.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_encoder/p302_052.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_encoder/p326_205.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_encoder/p335_037.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/diffvoice_encoder/p347_058.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" style="position: sticky; left: 0; z-index:10; opacity: 1.0; background-color: white;">Meta-StyleSpeech</th>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/metastylespeech/p225_007.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/metastylespeech/p234_069.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/metastylespeech/p238_069.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/metastylespeech/p245_029.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/metastylespeech/p248_033.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/metastylespeech/p261_064.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/metastylespeech/p294_050.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/metastylespeech/p302_052.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/metastylespeech/p326_205.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/metastylespeech/p335_037.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/metastylespeech/p347_058.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" style="position: sticky; left: 0; z-index:10; opacity: 1.0; background-color: white;">VITS (Xvec)</th>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/vits/p225_007.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/vits/p234_069.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/vits/p238_069.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/vits/p245_029.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/vits/p248_033.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/vits/p261_064.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/vits/p294_050.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/vits/p302_052.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/vits/p326_205.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/vits/p335_037.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/vits/p347_058.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" style="position: sticky; left: 0; z-index:10; opacity: 1.0; background-color: white;">YourTTS</th>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/yourtts/p225_007.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/yourtts/p234_069.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/yourtts/p238_069.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/yourtts/p245_029.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/yourtts/p248_033.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/yourtts/p261_064.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/yourtts/p294_050.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/yourtts/p302_052.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/yourtts/p326_205.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/yourtts/p335_037.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/yourtts/p347_058.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" style="position: sticky; left: 0; z-index:10; opacity: 1.0; background-color: white;">FastSp.2 (Xvec)</th>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/fs2/p225_007.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/fs2/p234_069.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/fs2/p238_069.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/fs2/p245_029.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/fs2/p248_033.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/fs2/p261_064.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/fs2/p294_050.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/fs2/p302_052.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/fs2/p326_205.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/fs2/p335_037.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 110px">
+                      <source src="/diffvoice-web/samples/zeroshot/fs2/p347_058.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="border border-2 bg-light p-5 rounded mt-3 border-dark">
+          <h3>Speech Editing with DiffVoice</h3>
+          <p class="lead">In this section, we demonstrate DiffVoice's ability to conduct text-based speech editing (including insertion, replacement, and inpainting) with state-of-the-art quality.</p>
+          <p class="lead">The following audio samples are obtained from 
+            <a href="https://ydcustc.github.io/retrieverTTS-demo/">RetrieverTTS</a> website. We specially thank the authors of RetrieverTTS for providing their generated samples for evaluation.
+          </p>
+          <p class="lead">(<strong>Speech Inpainting</strong>) Ruth was glad to hear <u><em><strong>that Philip had made a push into</strong></em></u> the world, and she was sure that his talent and courage would make a way for him. She should pray for his success at any rate, and especially that the Indians, in St. Louis, would not take his scalp.</p>
+          <div class="table-responsive">
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td>
+                    <strong>Original</strong>
+                  </td>
+                  <td>
+                    <strong>DiffVoice</strong>
+                  </td>
+                  <td>
+                    <strong>RetrieverTTS</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/editing/6.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/editing/6_diffvoice.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/editing/6_retriever.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="lead">(<strong>Speech Insertion</strong>) Is the under side of civilization any less important than the upper side <u><em><strong>of the very same civilization</strong></em></u> merely because it is deeper and more sombre?</p>
+          <div class="table-responsive">
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td>
+                    <strong>Original</strong>
+                  </td>
+                  <td>
+                    <strong>DiffVoice</strong>
+                  </td>
+                  <td>
+                    <strong>RetrieverTTS</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/editing/0.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/editing/0_diffvoice.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/editing/0_retriever.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="lead">(<strong>Speech Insertion</strong>) They are chiefly formed from combinations <u><em><strong>under his success</strong></em></u> of the impressions made in childhood.</p>
+          <div class="table-responsive">
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td>
+                    <strong>Original</strong>
+                  </td>
+                  <td>
+                    <strong>DiffVoice</strong>
+                  </td>
+                  <td>
+                    <strong>RetrieverTTS</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/editing/1.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/editing/1_diffvoice.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/editing/1_retriever.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="lead">The following samples are taken from the website of 
+            <a href="https://daxintan-cuhk.github.io/EditSpeech/">EditSpeech</a>. To which we have no access of the implementation. EditSpeech is trained on VCTK, instead of LibriTTS.
+          </p>
+          <p class="lead">(<strong>Speech Insertion</strong>) some have accepted it as a miracle <u><em><strong>never seen before</strong></em></u> without physical explanation</p>
+          <div class="table-responsive">
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td>
+                    <strong>Original</strong>
+                  </td>
+                  <td>
+                    <strong>DiffVoice</strong>
+                  </td>
+                  <td>
+                    <strong>EditSpeech</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/editing/3.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/editing/3_diffvoice.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/editing/3_editspeech.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="lead">(<strong>Speech Replacement</strong>) some have accepted it as <u><em><strong><del>a miracle</del> an undeniable fact</strong></em></u> without physical explanation</p>
+          <div class="table-responsive">
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td>
+                    <strong>Original</strong>
+                  </td>
+                  <td>
+                    <strong>DiffVoice</strong>
+                  </td>
+                  <td>
+                    <strong>EditSpeech</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/editing/3.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/editing/4_diffvoice.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/editing/4_editspeech.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="lead">(<strong>Speech Insertion</strong>) for that <u><em><strong>theoretical and realistic</strong></em></u> reason cover should not be given</p>
+          <div class="table-responsive">
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td>
+                    <strong>Original</strong>
+                  </td>
+                  <td>
+                    <strong>DiffVoice</strong>
+                  </td>
+                  <td>
+                    <strong>EditSpeech</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/editing/2.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/editing/2_diffvoice.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/editing/2_editspeech.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="lead">(<strong>Speech Replacement</strong>) you should always be able to <u><em><strong><del>get out in</del> focus your research on</strong></em></u> some direction</p>
+          <div class="table-responsive">
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td>
+                    <strong>Original</strong>
+                  </td>
+                  <td>
+                    <strong>DiffVoice</strong>
+                  </td>
+                  <td>
+                    <strong>EditSpeech</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/editing/5.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/editing/5_diffvoice.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/editing/5_editspeech.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="border border-2 bg-light p-5 rounded mt-3 border-dark">
+          <h3>Extra: Comparison with GuidedTTS 2</h3>
+          <p class="lead">In this section, we compare our model with
+            <a href="https://arxiv.org/abs/2205.15370">Guided TTS 2</a> by comparing samples obtained from 
+            <a href="https://ksw0306.github.io/guided-tts2-demo/">its demo page</a>. GuidedTTS 2 samples are downsampled to 16kHz for comparison. Compared with our work, GuidedTTS 2 is trained on a much larger dataset, and it does not require transcriptions of the source audios.the transcription of the source audios.
+          </p>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th colspan="4" style="text-align: left;">Transcript: This audio was generated by a text-to-speech model for Steve Jobs. We use ten second untranscribed speech from Steve Jobs’ Stanford Commencement Address.</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <strong>Reference (Steve Jobs)</strong>
+                  </td>
+                  <td>
+                    <strong>DiffVoice(Zero-shot)</strong>
+                  </td>
+                  <td>
+                    <strong>GuidedTTS2(Zero-shot)</strong>
+                  </td>
+                  <td>
+                    <strong>GuidedTTS2(Fine-tune)</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/compare_guidedtts2/steve_ref.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/compare_guidedtts2/steve_diffvoice.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/compare_guidedtts2/steve_guidedtts2_zeroshot.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/compare_guidedtts2/steve_guidedtts2_finetune.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th colspan="4" style="text-align: left;">Transcript: This audio was generated by a text-to-speech model for Sonny. We propose Guided Text-to-Speech 2, a diffusion based generative model for high-quality adaptive text-to-speech using untranscribed data.</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <strong>Reference (Heung-min Song)</strong>
+                  </td>
+                  <td>
+                    <strong>DiffVoice(Zero-shot)</strong>
+                  </td>
+                  <td>
+                    <strong>GuidedTTS2(Zero-shot)</strong>
+                  </td>
+                  <td>
+                    <strong>GuidedTTS2(Fine-tune)</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/compare_guidedtts2/heung_ref.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/compare_guidedtts2/heung_diffvoice.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/compare_guidedtts2/heung_guidedtts2_zeroshot.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/compare_guidedtts2/heung_guidedtts2_finetune.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th colspan="4" style="text-align: left;">Transcript: This audio was generated by a text-to-speech model for Emma Watson. We found that the gap between the zero shot approach and the finetune approach is quite large in the case of real world data.</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <strong>Reference (Emma Watson)</strong>
+                  </td>
+                  <td>
+                    <strong>DiffVoice(Zero-shot)</strong>
+                  </td>
+                  <td>
+                    <strong>GuidedTTS2(Zero-shot)</strong>
+                  </td>
+                  <td>
+                    <strong>GuidedTTS2(Fine-tune)</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/compare_guidedtts2/emma_ref.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/compare_guidedtts2/emma_diffvoice.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/compare_guidedtts2/emma_guidedtts2_zeroshot.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/compare_guidedtts2/emma_guidedtts2_finetune.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th colspan="4" style="text-align: left;">Transcript: There was unrestrained association of untried and convicted, juvenile with adult prisoners, vagrants, misdemeanants, felons.</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <strong>Reference (LJ002-0185)</strong>
+                  </td>
+                  <td>
+                    <strong>DiffVoice(Zero-shot)</strong>
+                  </td>
+                  <td>
+                    <strong>GuidedTTS2(Zero-shot)</strong>
+                  </td>
+                  <td>
+                    <strong>GuidedTTS2(Fine-tune)</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/compare_guidedtts2/LJ002-0185_ref.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/compare_guidedtts2/LJ002-0185_diffvoice.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/compare_guidedtts2/LJ002-0185_guidedtts2_zeroshot.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/compare_guidedtts2/LJ002-0185_guidedtts2_finetune.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th colspan="4" style="text-align: left;">Transcript: Nor did the methods by which they were perpetrated greatly vary from those in times past.</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <strong>Reference (LJ029-0212)</strong>
+                  </td>
+                  <td>
+                    <strong>DiffVoice(Zero-shot)</strong>
+                  </td>
+                  <td>
+                    <strong>GuidedTTS2(Zero-shot)</strong>
+                  </td>
+                  <td>
+                    <strong>GuidedTTS2(Fine-tune)</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/compare_guidedtts2/LJ029-0212_ref.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/compare_guidedtts2/LJ029-0212_diffvoice.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/compare_guidedtts2/LJ029-0212_guidedtts2_zeroshot.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/compare_guidedtts2/LJ029-0212_guidedtts2_finetune.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th colspan="4" style="text-align: left;">Transcript: He was struck with the appearance of the corpse, which was not emaciated, as after a long disease ending in death;</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <strong>Reference (LJ017-0244)</strong>
+                  </td>
+                  <td>
+                    <strong>DiffVoice(Zero-shot)</strong>
+                  </td>
+                  <td>
+                    <strong>GuidedTTS2(Zero-shot)</strong>
+                  </td>
+                  <td>
+                    <strong>GuidedTTS2(Fine-tune)</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/compare_guidedtts2/LJ017-0244_ref.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/compare_guidedtts2/LJ017-0244_diffvoice.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/compare_guidedtts2/LJ017-0244_guidedtts2_zeroshot.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="" preload="none" style="width: 250px">
+                      <source src="/diffvoice-web/samples/compare_guidedtts2/LJ017-0244_guidedtts2_finetune.wav" type="audio/wav">
+                    </audio>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <script src="/statics/jquery/jquery-1.12.4.min.js"></script>
+    <script src="/statics/bootstrap-5.2.2-dist/bootstrap.min.js"></script>
+  </body>
+  <script>
+        $(function(){
+            $("audio").on("play", function() {
+                $("audio").not(this).each(function(index, audio) {
+                    audio.pause();
+                    audio.currentTime = 0;
+                });
+            });
+        });
+        </script>
+</html>
