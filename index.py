@@ -8,8 +8,8 @@ import dominate
 from dominate.tags import *
 from dominate.util import raw
 
-from .templates import header, authors_row
-from .templates.audios import audio_table
+from templates import header, authors_row
+from templates.audios import audio_table
 
 
 if __name__ == "__main__":
@@ -49,11 +49,11 @@ if __name__ == "__main__":
                 )
 
             with div(cls="border border-2 bg-light p-5 rounded mt-3 border-dark"):
-                from .abstract import section_abstract
+                from abstract import section_abstract
                 section_abstract()
 
             with div(cls="border border-2 bg-light p-5 rounded mt-3 border-dark"):
-                from .seen_libritts import libritts_table
+                from seen_libritts import libritts_table
                 h3("Results for Seen Speakers in LibriTTS")
                 p(
                     "20 random speakers seen during training from the train-clean-100 split of LibriTTS.",
@@ -62,7 +62,7 @@ if __name__ == "__main__":
                 libritts_table()
 
             with div(cls="border border-2 bg-light p-5 rounded mt-3 border-dark"):
-                from .zeroshot import libritts_table
+                from zeroshot import libritts_table
                 h3("Zeroshot Synthesis on LibriTTS test-clean")
                 p(
                     "All speakers are unseen from the test-clean split of LibriTTS.",
@@ -71,7 +71,7 @@ if __name__ == "__main__":
                 libritts_table()
 
             with div(cls="border border-2 bg-light p-5 rounded mt-3 border-dark"):
-                from .zeroshot import vctk_table
+                from zeroshot import vctk_table
                 h3("Zeroshot Synthesis on VCTK")
                 p(
                     "All speakers are unseen from VCTK",
@@ -80,12 +80,12 @@ if __name__ == "__main__":
                 vctk_table()
 
             with div(cls="border border-2 bg-light p-5 rounded mt-3 border-dark"):
-                from .editing import editing
+                from editing import editing
                 h3("Speech Editing with DiffVoice")
                 editing()
                 
             with div(cls="border border-2 bg-light p-5 rounded mt-3 border-dark"):
-                from .guidedtts2 import section_guidedtts2_compare
+                from guidedtts2 import section_guidedtts2_compare
                 section_guidedtts2_compare()
         
     with doc.footer:

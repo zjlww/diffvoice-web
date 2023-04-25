@@ -1,6 +1,6 @@
 from dominate.tags import *
 from dominate.util import raw
-from .templates.audios import audio_table
+from templates.audios import audio_table
 
 
 

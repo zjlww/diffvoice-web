@@ -1,4 +1,4 @@
-from .templates.audios import dense_audio_table
+from templates.audios import dense_audio_table
 
 
 def libritts_table():

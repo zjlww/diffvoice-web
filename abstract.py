@@ -3,7 +3,7 @@ HTML generator for Section: Abstract.
 """
 
 from dominate.tags import *
-from .templates.audios import audio_table, audio_grid
+from templates.audios import audio_table, audio_grid
 from dominate.util import raw
 
 
@@ -23,4 +23,12 @@ def section_abstract():
     audio_grid(
         audio_files=[f"/diffvoice-web/samples/abstract/{name}.wav" for name in ["f_0", "f_1", "f_2", "m_0", "m_1", "m_2"]],
         width=3, control_width_px=300
+    )
+    p(
+        """
+        This notion 
+        """,
+        a("page", href="https://www.notion.so/Extra-Results-for-DiffVoice-1620a0e0ddda44feb4f0579611ae5ee6"),
+        " contains a few more audio samples using the BigVGAN vocoder.",
+        _class="lead"
     )

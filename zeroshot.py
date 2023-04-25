@@ -1,5 +1,5 @@
 from dominate.tags import *
-from .templates.audios import dense_audio_table
+from templates.audios import dense_audio_table
 
 
 system_names = [

@@ -3,8 +3,8 @@ HTML generator for Section: Comparison with GuidedTTS 2.
 """
 
 from dominate.tags import *
-from .templates.audios import audio_table
-from .templates.spinspy import nav_spin
+from templates.audios import audio_table
+from templates.spinspy import nav_spin
 
 
 def section_guidedtts2_compare():
